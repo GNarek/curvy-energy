@@ -48,13 +48,13 @@ const generateDallePrompt = () => {
   ];
 
   const outfits = [
-    "in summer shorts and a t-shirt",
-    "in soft cotton shorts and a tank top",
-    "wearing high-waisted shorts with a crop top",
-    "in sporty shorts and a relaxed tee",
-    "in flowy shorts and a tucked-in blouse",
-    "in casual shorts and an button-up shirt",
-    "in linen shorts and a relaxed summer top",
+    "in summer shorts and a casual t-shirt",
+    "in soft cotton shorts and a loose top",
+    "wearing high-waisted shorts and a simple tee",
+    "in sporty shorts and a relaxed t-shirt",
+    "in flowy shorts and a light blouse",
+    "in casual shorts and a short-sleeved shirt",
+    "in linen shorts and a breezy summer top",
   ];
 
   const moods = [
