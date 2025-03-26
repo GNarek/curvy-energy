@@ -19,6 +19,8 @@ const postPhotoToFacebook = async (
 
 const generateImageWithGoEnhancePrompt = async (prompt) => {
   const GOENHANCE_API_KEY = process.env.GOENHANCE_API_KEY;
+  console.log("GOENHANCE_API_KEY", GOENHANCE_API_KEY);
+  return;
   const axios = require("axios");
 
   // Step 1: Generate image UUID
