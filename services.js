@@ -90,21 +90,27 @@ const generateCurvyWomanCaption = async (prompt) => {
         {
           role: "user",
           content: `
-You're helping generate a Facebook post caption and hashtags for a body-positive plus-size photo of a curvy woman. Based on the AI art prompt below, return a response in **strict JSON format** like this:
+You're helping generate a Facebook post caption and matching hashtags for a photo of a confident plus-size woman or two women, unapologetically beautiful in casual, revealing clothing.
+
+The world often tells women they need to be small to be worthy. This page exists to celebrate curves, confidence, softness, skin, and real femininity. The goal is to stop the scroll — with quiet power, poetic defiance, or emotional resonance.
+
+Return your response in **strict JSON format** like this:
 
 {
   "caption": "Your poetic caption here.",
   "hashtags": "#hashtag1 #hashtag2 #hashtag3"
 }
 
-Avoid any explanation — only return valid JSON.
+Avoid any explanation. No photo description. No generic affirmations. The caption should feel personal, real, and a little bold. Like something someone might write in their journal or post when they’re finally done shrinking.
 
-### Prompt:
+Do not include any extra text or formatting.
+
+### Image Prompt:
 ${prompt}
-          `.trim(),
+        `.trim(),
         },
       ],
-      max_tokens: 200,
+      max_tokens: 300,
     },
     {
       headers: {
