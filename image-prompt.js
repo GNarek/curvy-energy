@@ -84,7 +84,7 @@ const generateDallePrompt = () => {
   const mood = random(moods);
   const lighting = random(lightings);
 
-  const prompt = `A confident plus-size woman ${action} ${location}, ${outfit}. The lighting is ${lighting}. The scene feels ${mood}. Avoid studio or posed settings — make it feel like a real-life moment. Her appearance should represent natural body diversity.`;
+  const prompt = `Super realistic. A confident plus-size woman ${action} ${location}, ${outfit}. The lighting is ${lighting}. The scene feels ${mood}. Avoid studio or posed settings — make it feel like a real-life moment. Her appearance should represent natural body diversity.`;
 
   return prompt;
 };
