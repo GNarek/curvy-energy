@@ -48,13 +48,13 @@ const generateDallePrompt = () => {
   ];
 
   const outfits = [
-    "in summer shorts and a casual t-shirt",
-    "in soft cotton shorts and a loose top",
-    "wearing high-waisted shorts and a simple tee",
-    "in sporty shorts and a relaxed t-shirt",
-    "in flowy shorts and a light blouse",
-    "in casual shorts and a short-sleeved shirt",
-    "in linen shorts and a breezy summer top",
+    "in denim short shorts and a loose t-shirt",
+    "in soft cotton shorts and a tank top",
+    "wearing high-waisted short shorts with a crop top",
+    "in sporty short shorts and a relaxed tee",
+    "in flowy short shorts and a tucked-in blouse",
+    "in casual short shorts and an open button-up shirt",
+    "in linen short shorts and a relaxed summer top",
   ];
 
   const moods = [
@@ -84,7 +84,7 @@ const generateDallePrompt = () => {
   const mood = random(moods);
   const lighting = random(lightings);
 
-  const prompt = `Super realistic. A woman with a naturally full figure ${action} ${location}, ${outfit}. The lighting is ${lighting}. The scene feels ${mood}. Avoid studio or posed settings — make it feel like a real-life moment. Her appearance should represent natural body diversity.`;
+  const prompt = `This image aims to show that having extra weight isn't shameful. A confident plus-size woman ${action} ${location}, ${outfit}. The lighting is ${lighting}. The scene feels ${mood}. Avoid studio or posed settings — make it feel like a real-life moment. Her appearance should represent natural body diversity.`;
 
   return prompt;
 };
