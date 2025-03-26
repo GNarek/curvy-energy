@@ -63,12 +63,14 @@ const generateImageWithGoEnhancePrompt = async (prompt) => {
       );
 
       const { status, json } = res.data.data;
-      console.log("res.data", res.data);
+
       if (status === "success" && json && json[0]?.value) {
         return json[0].value;
       }
 
-      console.log(`⏳ Waiting for image... (attempt ${attempt + 1})`);
+      console.log(
+        `⏳ Attempt ${attempt + 1}), status: ${status}, img_uuid: ${img_uuid},`
+      );
       await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
     }
 
