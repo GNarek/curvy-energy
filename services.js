@@ -17,35 +17,92 @@ const postPhotoToFacebook = async (
   return res.data.post_id;
 };
 
-const generateImageWithDallePrompt = async (prompt) => {
-  const res = await axios.post(
-    "https://api.openai.com/v1/images/generations",
-    {
-      model: "dall-e-3",
-      prompt,
-      n: 1,
-      size: "1024x1024",
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+const generateImageWithGoEnhancePrompt = async (prompt) => {
+  const GOENHANCE_API_KEY = process.env.GOENHANCE_API_KEY;
+  const axios = require("axios");
 
-  return res.data.data[0]?.url;
+  // Step 1: Generate image UUID
+  const generateImage = async () => {
+    const response = await axios.post(
+      "https://api.goenhance.ai/api/v1/text2image/generate",
+      {
+        args: {
+          seed: -1,
+          prompt,
+          negative_prompt:
+            "worst quality,low quality, normal quality, lowres, bad anatomy, bad hands, text, error, nsfw",
+          ratio: "1:1",
+          model: 12,
+          batch_size: 1,
+        },
+        type: "mx-text2img",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${GOENHANCE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data.data.img_uuid;
+  };
+
+  // Step 2: Poll job until image is ready
+  const getImageResult = async (img_uuid) => {
+    const MAX_RETRIES = 100;
+    const DELAY_MS = 10000;
+
+    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+      const res = await axios.get(
+        `https://api.goenhance.ai/api/v1/jobs/detail?img_uuid=${img_uuid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${GOENHANCE_API_KEY}`,
+          },
+        }
+      );
+
+      const { status, json } = res.data.data;
+      console.log("res.data", res.data);
+      if (status === "success" && json && json[0]?.value) {
+        return json[0].value;
+      }
+
+      console.log(`⏳ Waiting for image... (attempt ${attempt + 1})`);
+      await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
+    }
+
+    throw new Error("GoEnhance image generation timed out.");
+  };
+
+  const img_uuid = await generateImage();
+  return await getImageResult(img_uuid);
 };
 
-const generateCurvyWomanCaption = async () => {
-  const prompt = `Generate a short, emotionally engaging question that encourages empathy or admiration for a plus-size woman without making conclusions. Avoid generic phrases. It should feel personal, real, and slightly vulnerable — like something someone might post as a caption. Example: ‘Is confidence still confidence when it doesn’t fit the mold?’ or ‘Would you still think she’s beautiful if she didn’t hide?’ Each question must be unique, slightly poetic, and subtle.`;
-
+const generateCurvyWomanCaption = async (prompt) => {
   const res = await axios.post(
     "https://api.openai.com/v1/chat/completions",
     {
       model: "gpt-4",
-      messages: [{ role: "user", content: prompt }],
-      max_tokens: 100,
+      messages: [
+        {
+          role: "user",
+          content: `
+You're helping generate a Facebook post caption and hashtags for a body-positive photo of a curvy woman. Based on the AI art prompt below, return a response in **strict JSON format** like this:
+
+{
+  "caption": "Your poetic caption here.",
+  "hashtags": "#hashtag1 #hashtag2 #hashtag3"
+}
+
+Avoid any explanation — only return valid JSON.
+
+### Prompt:
+${prompt}
+          `.trim(),
+        },
+      ],
+      max_tokens: 200,
     },
     {
       headers: {
@@ -55,12 +112,22 @@ const generateCurvyWomanCaption = async () => {
     }
   );
 
-  return res.data.choices[0].message.content.trim();
+  const raw = res.data.choices[0].message.content.trim();
+
+  try {
+    const parsed = JSON.parse(raw);
+    return {
+      caption: parsed.caption.trim(),
+      hashtags: parsed.hashtags.trim(),
+    };
+  } catch (err) {
+    console.error("❌ Failed to parse caption JSON:", raw);
+    throw err;
+  }
 };
 
 module.exports = {
-  // generateDallePrompt,
-  generateImageWithDallePrompt,
+  generateImageWithGoEnhancePrompt,
   generateCurvyWomanCaption,
   postPhotoToFacebook,
 };

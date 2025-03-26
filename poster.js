@@ -1,6 +1,6 @@
 require("dotenv").config();
 const {
-  generateImageWithDallePrompt,
+  generateImageWithGoEnhancePrompt,
   generateCurvyWomanCaption,
   postPhotoToFacebook,
 } = require("./services");
@@ -15,14 +15,13 @@ const PAGE_ID = "525878547285435";
   console.log("🎨 DALL·E Prompt:", dallePrompt);
 
   // Step 2: Generate DALL·E Image
-  const imageUrl = await generateImageWithDallePrompt(dallePrompt);
+  const imageUrl = await generateImageWithGoEnhancePrompt(dallePrompt);
   console.log("🖼️ Image URL:", imageUrl);
 
   // Step 3: Generate Caption + Hashtags
-  const question = await generateCurvyWomanCaption();
-  const hashtags =
-    "#CurvyEnergy #BodyPositive #ConfidenceIsBeautiful #RealWomen";
-  const message = `${question}\n\n${hashtags}`;
+  const { caption, hashtags } = await generateCurvyWomanCaption(dallePrompt);
+
+  const message = `${caption}\n\n${hashtags}`;
 
   // Step 4: Post to Facebook
   const postId = await postPhotoToFacebook(

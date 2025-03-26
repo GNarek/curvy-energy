@@ -1,93 +1,68 @@
 const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const generateDallePrompt = () => {
-  const indoorActions = [
-    "reading a book",
-    "stretching after a nap",
-    "dancing in the kitchen",
-    "writing in a journal",
-    "watering plants",
-    "cooking breakfast",
-    "folding laundry",
-    "doing yoga",
-    "painting on a canvas",
-    "drinking tea by the window",
+  const actions = [
+    "arching her back while stretching",
+    "lying on her side with relaxed confidence",
+    "sitting cross-legged, looking over her shoulder",
+    "leaning back with arms behind her",
+    "standing barefoot with hips slightly tilted",
+    "reaching up with both arms playfully",
+    "lounging on a bed, propped on one arm",
+    "posing with one leg slightly raised",
+    "twisting gently at the waist with a soft smile",
+    "playing with her hair while reclining",
   ];
 
-  const outdoorActions = [
-    "lying in the grass",
-    "walking through a park",
-    "sitting at a café",
-    "enjoying a picnic",
-    "watching the sunset",
-    "standing on a balcony",
-    "walking a dog",
-    "browsing a street market",
-    "resting on a bench under trees",
-    "strolling by a lake",
-  ];
-
-  const indoorLocations = [
-    "in a cozy kitchen",
-    "in a sunlit living room",
-    "on a balcony during sunset",
-    "in an artist's studio",
-    "in a warmly lit bedroom",
-    "in a plant-filled reading nook",
-    "in a home with soft ambient light",
-  ];
-
-  const outdoorLocations = [
-    "in a quiet park",
-    "on a forest path",
-    "by a calm lake",
-    "on a rooftop at twilight",
-    "in a garden with flowers",
-    "under string lights",
-    "at an open-air café",
+  const locations = [
+    "on a sun-drenched balcony",
+    "in a softly lit bedroom with white sheets",
+    "on a warm wooden deck at sunset",
+    "in front of sheer curtains with sunlight filtering in",
+    "on a velvet couch with ambient natural light",
+    "at a quiet garden terrace",
+    "in a breezy open-window room",
   ];
 
   const outfits = [
-    "in denim short shorts and a loose t-shirt",
-    "in soft cotton shorts and a tank top",
-    "wearing high-waisted short shorts with a crop top",
-    "in sporty short shorts and a relaxed tee",
-    "in flowy short shorts and a tucked-in blouse",
-    "in casual short shorts and an open button-up shirt",
-    "in linen short shorts and a relaxed summer top",
+    "in a sheer robe over a matching bralette and briefs",
+    "wearing an off-shoulder crop top and fitted shorts",
+    "in a flowing wrap dress loosely tied at the waist",
+    "wearing a two-piece loungewear set with bare midriff",
+    "in a silk slip dress with a low back",
+    "in a high-slit skirt and open-front blouse",
+    "wearing an oversized button-up shirt that falls off one shoulder",
   ];
 
-  const moods = [
-    "natural and relaxed",
-    "warm and thoughtful",
-    "peaceful and candid",
-    "gentle and expressive",
-    "soft and introspective",
-    "realistic and uplifting",
+  const vibes = [
+    "confident and curvaceous",
+    "elegantly sensual",
+    "soft, bold, and body-celebrating",
+    "natural and unapologetic",
+    "warm, feminine, and intimate",
+    "effortlessly seductive",
   ];
 
-  const lightings = [
-    "soft daylight",
-    "golden hour light",
-    "early morning glow",
-    "diffused indoor lighting",
-    "twilight ambiance",
-    "cozy warm-toned light",
+  const lighting = [
+    "soft golden hour glow",
+    "diffused natural window light",
+    "sunlight filtered through sheer curtains",
+    "moody sunset reflections",
+    "morning light pouring across the bed",
+    "twilight glow with soft shadows",
   ];
 
-  const isOutdoor = Math.random() > 0.5;
-  const action = isOutdoor ? random(outdoorActions) : random(indoorActions);
-  const location = isOutdoor
-    ? random(outdoorLocations)
-    : random(indoorLocations);
+  const action = random(actions);
+  const location = random(locations);
   const outfit = random(outfits);
-  const mood = random(moods);
-  const lighting = random(lightings);
+  const mood = random(vibes);
+  const light = random(lighting);
 
-  const prompt = `This image aims to show that having extra weight isn't shameful. A confident woman with an extra weight ${action} ${location}, ${outfit}. The lighting is ${lighting}. The scene feels ${mood}. Avoid studio or posed settings — make it feel like a real-life moment. She shouldn't be sexual`;
+  const prompt = `Ultra-realistic photo of a confident extra plus-size woman ${action} ${location}, ${outfit}. The lighting is ${light}. The mood is ${mood}. Emphasize open posture, soft glowing skin, sensual curves, and body visibility. Avoid studio settings. No nudity.`;
 
   return prompt;
 };
+
 module.exports = {
   generateDallePrompt,
 };
