@@ -7,7 +7,7 @@ const {
 const { generateDallePrompt } = require("./image-prompt");
 
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
-const PAGE_ID = process.env.PAGE_ID;
+const PAGE_ID = "525878547285435";
 
 (async () => {
   // Step 1: Generate DALL·E Prompt
