@@ -84,7 +84,7 @@ const generateDallePrompt = () => {
   const mood = random(moods);
   const lighting = random(lightings);
 
-  const prompt = `This image aims to show that having extra weight isn't shameful. A confident plus-size woman ${action} ${location}, ${outfit}. The lighting is ${lighting}. The scene feels ${mood}. Avoid studio or posed settings — make it feel like a real-life moment. Her appearance should represent natural body diversity.`;
+  const prompt = `This image aims to show that having extra weight isn't shameful. A confident woman with an extra weight ${action} ${location}, ${outfit}. The lighting is ${lighting}. The scene feels ${mood}. Avoid studio or posed settings — make it feel like a real-life moment. She shouldn't be sexual`;
 
   return prompt;
 };
