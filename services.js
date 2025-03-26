@@ -19,8 +19,6 @@ const postPhotoToFacebook = async (
 
 const generateImageWithGoEnhancePrompt = async (prompt) => {
   const GOENHANCE_API_KEY = process.env.GOENHANCE_API_KEY;
-  console.log("GOENHANCE_API_KEY", GOENHANCE_API_KEY);
-  return;
   const axios = require("axios");
 
   // Step 1: Generate image UUID
@@ -92,7 +90,7 @@ const generateCurvyWomanCaption = async (prompt) => {
         {
           role: "user",
           content: `
-You're helping generate a Facebook post caption and hashtags for a body-positive photo of a curvy woman. Based on the AI art prompt below, return a response in **strict JSON format** like this:
+You're helping generate a Facebook post caption and hashtags for a body-positive plus-size photo of a curvy woman. Based on the AI art prompt below, return a response in **strict JSON format** like this:
 
 {
   "caption": "Your poetic caption here.",
