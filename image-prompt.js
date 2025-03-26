@@ -1,80 +1,93 @@
 const random = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 const generateDallePrompt = () => {
-  const actions = [
+  const indoorActions = [
     "reading a book",
     "stretching after a nap",
     "dancing in the kitchen",
-    "lying in the grass",
-    "walking through a quiet park",
-    "gazing out the window",
-    "sitting at a café",
-    "washing dishes while humming",
-    "playing with a pet",
     "writing in a journal",
     "watering plants",
     "cooking breakfast",
     "folding laundry",
     "doing yoga",
     "painting on a canvas",
-    "drinking coffee slowly",
+    "drinking tea by the window",
   ];
 
-  const locations = [
+  const outdoorActions = [
+    "lying in the grass",
+    "walking through a park",
+    "sitting at a café",
+    "enjoying a picnic",
+    "watching the sunset",
+    "standing on a balcony",
+    "walking a dog",
+    "browsing a street market",
+    "resting on a bench under trees",
+    "strolling by a lake",
+  ];
+
+  const indoorLocations = [
+    "in a cozy kitchen",
     "in a sunlit living room",
     "on a balcony during sunset",
-    "in a cozy kitchen",
+    "in an artist's studio",
+    "in a warmly lit bedroom",
+    "in a plant-filled reading nook",
+    "in a home with soft ambient light",
+  ];
+
+  const outdoorLocations = [
+    "in a quiet park",
     "on a forest path",
     "by a calm lake",
-    "in an artist's studio",
-    "on a picnic blanket",
-    "in a warm cafe corner",
-    "under string lights in a backyard",
     "on a rooftop at twilight",
-    "beside a window with rain falling",
+    "in a garden with flowers",
+    "under string lights",
+    "at an open-air café",
   ];
 
   const outfits = [
-    "wearing a soft sweater and leggings",
-    "in a flowing summer dress",
-    "wearing high-waisted jeans and a crop top",
-    "in a casual tank top and joggers",
-    "in an oversized hoodie",
-    "in a loose shirt with comfy pants",
-    "in a relaxed home outfit",
-    "in a cozy robe",
+    "in comfortable clothes",
+    "in a casual outfit",
+    "wearing relaxed, everyday clothing",
+    "in a soft sweater and jeans",
+    "in a simple summer dress",
+    "in cozy layered clothes",
+    "in light and airy fabrics",
   ];
 
   const moods = [
-    "candid and natural",
-    "gently elegant",
-    "dreamy and real",
-    "thoughtful and expressive",
-    "quiet and emotional",
-    "peaceful and relaxed",
-    "realistic and unposed",
+    "natural and relaxed",
+    "warm and thoughtful",
+    "peaceful and candid",
+    "gentle and expressive",
+    "soft and introspective",
+    "realistic and uplifting",
   ];
 
   const lightings = [
-    "soft natural light",
-    "golden hour glow",
-    "early morning sunlight",
-    "warm indoor lighting",
-    "twilight shadows",
-    "diffused rainy light",
+    "soft daylight",
+    "golden hour light",
+    "early morning glow",
+    "diffused indoor lighting",
+    "twilight ambiance",
+    "cozy warm-toned light",
   ];
 
-  const action = random(actions);
-  const location = random(locations);
+  const isOutdoor = Math.random() > 0.5;
+  const action = isOutdoor ? random(outdoorActions) : random(indoorActions);
+  const location = isOutdoor
+    ? random(outdoorLocations)
+    : random(indoorLocations);
   const outfit = random(outfits);
   const mood = random(moods);
   const lighting = random(lightings);
 
-  const prompt = `A confident plus-size woman ${action} ${location}, ${outfit}. The lighting is ${lighting}. The scene feels ${mood}. Avoid studio or posed settings — make it feel like a real-life moment. She should have a visibly fuller figure to reflect realistic body diversity.`;
+  const prompt = `A confident plus-size woman ${action} ${location}, ${outfit}. The lighting is ${lighting}. The scene feels ${mood}. Avoid studio or posed settings — make it feel like a real-life moment. Her appearance should represent natural body diversity.`;
 
   return prompt;
 };
-
 module.exports = {
   generateDallePrompt,
 };
