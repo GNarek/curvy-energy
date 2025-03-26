@@ -48,13 +48,13 @@ const generateDallePrompt = () => {
   ];
 
   const outfits = [
-    "in comfortable clothes",
-    "in a casual outfit",
-    "wearing relaxed, everyday clothing",
-    "in a soft sweater and jeans",
-    "in a simple summer dress",
-    "in cozy layered clothes",
-    "in light and airy fabrics",
+    "in denim short shorts and a loose t-shirt",
+    "in soft cotton shorts and a tank top",
+    "wearing high-waisted short shorts with a crop top",
+    "in sporty short shorts and a relaxed tee",
+    "in flowy short shorts and a tucked-in blouse",
+    "in casual short shorts and an open button-up shirt",
+    "in linen short shorts and a relaxed summer top",
   ];
 
   const moods = [
