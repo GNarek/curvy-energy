@@ -30,9 +30,11 @@ const generateDallePrompt = () => {
     "holding a shopping bag and biting her lip playfully",
     "looking over her sunglasses while leaning on a railing",
     "dancing to music with earbuds in, unaware of the camera",
+    "standing with her back but looking at you over her shoulder",
   ];
 
   const groupPoses = [
+    "on standing with her back but looking at you over her shoulder the other one looking at her",
     "laughing together while walking side-by-side, one flipping her hair",
     "adjusting each other's crop tops while chatting",
     "taking a selfie together while leaning close",
@@ -56,17 +58,54 @@ const generateDallePrompt = () => {
     "next to a food truck on a warm day",
   ];
 
+  const colors = [
+    "black",
+    "white",
+    "red",
+    "dark red",
+    "burgundy",
+    "pink",
+    "hot pink",
+    "baby pink",
+    "fuchsia",
+    "rose gold",
+    "purple",
+    "lavender",
+    "deep violet",
+    "midnight blue",
+    "teal",
+    "turquoise",
+    "emerald green",
+    "lime green",
+    "gold",
+    "silver",
+    "metallic",
+    "denim blue",
+  ];
+
   const outfits = [
-    "in ultra-short denim shorts and a fitted crop top",
-    "wearing a low-cut tank top with high-waisted shorts",
-    "in a tight t-shirt tied at the waist and short athletic shorts",
-    "in a backless halter top with ripped low-rise jeans",
-    "wearing a loose off-shoulder tee with nothing underneath and tiny shorts",
-    "in a low-rise miniskirt and a tucked-in ribbed tank",
-    "wearing an unzipped hoodie showing bare midriff and jean shorts",
-    "in a spaghetti-strap top and barely-buttoned shorts",
-    "wearing a button-up shirt that falls open over short cotton shorts",
-    "in a sleeveless crop top and micro shorts hugging her hips",
+    "in ultra-short [bottomColor] denim shorts and a fitted [topColor] crop top",
+    "wearing a low-cut [topColor] tank top with [bottomColor] high-waisted shorts",
+    "in a tight [topColor] t-shirt tied at the waist and short [bottomColor] athletic shorts",
+    "in a backless [topColor] halter top with ripped [bottomColor] low-rise jeans",
+    "wearing a loose off-shoulder [topColor] tee with nothing underneath and tiny [bottomColor] shorts",
+    "in a low-rise [bottomColor] miniskirt and a tucked-in [topColor] ribbed tank",
+    "wearing an unzipped [topColor] hoodie showing bare midriff and [bottomColor] jean shorts",
+    "in a [topColor] spaghetti-strap top and barely-buttoned [bottomColor] shorts",
+    "wearing a button-up [topColor] shirt that falls open over short [bottomColor] cotton shorts",
+    "in a sleeveless [topColor] crop top and micro [bottomColor] shorts hugging her hips",
+
+    // NEW colorized sexy variants:
+    "in a barely-there [topColor] bikini top and a [bottomColor] plaid mini skirt riding low",
+    "wearing a sheer [topColor] mesh crop top that just covers her nipples and a tight [bottomColor] leather mini skirt",
+    "in a micro [topColor] top that clings to her curves and a frilly [bottomColor] miniskirt swaying with every step",
+    "wearing a strapless [topColor] tube top with underboob peeking and a tight [bottomColor] ruched mini skirt",
+    "in a tied-up [topColor] scarf top barely covering her chest and a low-cut [bottomColor] pleated skirt",
+    "in a plunging [topColor] V-neck bralette and a [bottomColor] short skirt with a thigh-high slit",
+    "wearing [topColor] nipple covers under an open [bottomColor] lace shrug and distressed denim shorts",
+    "in a [topColor] bikini top under a half-buttoned [bottomColor] blouse and a mini wrap skirt",
+    "in a lace-up [topColor] crop top revealing sideboob and a skin-tight [bottomColor] micro mini",
+    "wearing just a [topColor] bikini top and an oversized [bottomColor] belt acting as a skirt",
   ];
 
   const moods = [
@@ -96,9 +135,6 @@ const generateDallePrompt = () => {
   const mood = random(moods);
   const light = random(lighting);
 
-  let subject;
-  let outfit;
-
   const nationality1 = random(nationalities);
   let nationality2 = nationality1;
 
@@ -106,13 +142,34 @@ const generateDallePrompt = () => {
     nationality2 = random(nationalities);
   }
 
+  const getRandomColor = () =>
+    colors[Math.floor(Math.random() * colors.length)];
+
+  const getOutfit = () => {
+    const outfitTemplate = outfits[Math.floor(Math.random() * outfits.length)];
+    let topColor = getRandomColor();
+    let bottomColor = getRandomColor();
+
+    // Optional: avoid same top and bottom color
+    while (bottomColor === topColor) {
+      bottomColor = getRandomColor();
+    }
+
+    return outfitTemplate
+      .replace("[topColor]", topColor)
+      .replace("[bottomColor]", bottomColor);
+  };
+
+  let subject;
+  let outfit;
+
   if (isGroup) {
-    const outfit1 = random(outfits);
-    const outfit2 = random(outfits.filter((o) => o !== outfit1));
+    const outfit1 = getOutfit();
+    const outfit2 = getOutfit();
     outfit = `${outfit1}. The other is ${outfit2}. Be sure they aren't wearing the same clothes and totally different.`;
     subject = `a ${nationality1} and a ${nationality2} extra plus-size woman`;
   } else {
-    outfit = random(outfits);
+    outfit = getOutfit();
     subject = `a confident, seductive ${nationality1} extra plus-size woman`;
   }
 

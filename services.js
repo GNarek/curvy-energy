@@ -90,9 +90,9 @@ const generateCurvyWomanCaption = async (prompt) => {
         {
           role: "user",
           content: `
-You're helping generate a Facebook post caption and matching hashtags for a photo of a confident plus-size woman or two women, unapologetically beautiful in casual, revealing clothing.
+Write a short Facebook post caption written in the voice of a confident plus-size woman (or two women), shown in a photo wearing casual, revealing clothing. The tone can be bold, soft, emotional, or flirty — but it should feel like her own words, not a third-party narrator.
 
-The world often tells women they need to be small to be worthy. This page exists to celebrate curves, confidence, softness, skin, and real femininity. The goal is to stop the scroll — with quiet power, poetic defiance, or emotional resonance.
+Make it sound personal, like something she’d post to her own page or story — a message to her followers, the world, or herself.
 
 Return your response in **strict JSON format** like this:
 
@@ -134,8 +134,18 @@ ${prompt}
   }
 };
 
+const getCallToAction = () => {
+  const ctas = [
+    "If you like me, send a ❤️ in the comments 😉",
+    "Drop a ❤️ if you love curves",
+    "Send a 💋 and I’ll send one back",
+  ];
+  return ctas[Math.floor(Math.random() * ctas.length)];
+};
+
 module.exports = {
   generateImageWithGoEnhancePrompt,
   generateCurvyWomanCaption,
+  getCallToAction,
   postPhotoToFacebook,
 };

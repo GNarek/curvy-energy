@@ -2,6 +2,7 @@ require("dotenv").config();
 const {
   generateImageWithGoEnhancePrompt,
   generateCurvyWomanCaption,
+  getCallToAction,
   postPhotoToFacebook,
 } = require("./services");
 const { generateDallePrompt } = require("./image-prompt");
@@ -21,7 +22,7 @@ const PAGE_ID = "525878547285435";
   // Step 3: Generate Caption + Hashtags
   const { caption, hashtags } = await generateCurvyWomanCaption(dallePrompt);
 
-  const message = `${caption}\n\n${hashtags}`;
+  const message = `${getCallToAction()}\n\n${caption}\n\n${hashtags}`;
 
   // Step 4: Post to Facebook
   const postId = await postPhotoToFacebook(
