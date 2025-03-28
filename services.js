@@ -30,7 +30,7 @@ const generateImageWithGoEnhancePrompt = async (prompt) => {
           seed: -1,
           prompt,
           negative_prompt:
-            "worst quality,low quality, normal quality, lowres, bad anatomy, bad hands, text, error, nsfw",
+            "worst quality, low quality, lowres, normal quality, bad anatomy, bad hands, text, watermark, error, nsfw, nude, topless, naked, see-through, sheer, mesh clothing, thong, bikini, underwear, exposed nipples, nipple covers, erotic, lingerie, bed, pose with no top, open shirt with no bra, fully exposed chest, open robe, straddling, sex toy, censored, mosaic, extreme cleavage, pornographic",
           ratio: "1:1",
           model: 12,
           batch_size: 1,

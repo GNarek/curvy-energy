@@ -4,7 +4,6 @@ const generateDallePrompt = () => {
   const nationalities = [
     "Armenian",
     "Brazilian",
-    "African American",
     "Latina",
     "Korean",
     "Indian",
@@ -102,10 +101,10 @@ const generateDallePrompt = () => {
     "wearing a strapless [topColor] tube top with underboob peeking and a tight [bottomColor] ruched mini skirt",
     "in a tied-up [topColor] scarf top barely covering her chest and a low-cut [bottomColor] pleated skirt",
     "in a plunging [topColor] V-neck bralette and a [bottomColor] short skirt with a thigh-high slit",
-    "wearing [topColor] nipple covers under an open [bottomColor] lace shrug and distressed denim shorts",
+    "wearing [topColor] tank top under a sheer [bottomColor] lace shrug and distressed denim shorts",
     "in a [topColor] bikini top under a half-buttoned [bottomColor] blouse and a mini wrap skirt",
     "in a lace-up [topColor] crop top revealing sideboob and a skin-tight [bottomColor] micro mini",
-    "wearing just a [topColor] bikini top and an oversized [bottomColor] belt acting as a skirt",
+    "wearing a [topColor] crop bikini top and an oversized [bottomColor] belt-styled skirt",
   ];
 
   const moods = [
@@ -135,7 +134,7 @@ const generateDallePrompt = () => {
   const mood = random(moods);
   const light = random(lighting);
 
-  const nationality1 = random(nationalities);
+  const nationality1 = "African American";
   let nationality2 = nationality1;
 
   while (nationality2 === nationality1) {
