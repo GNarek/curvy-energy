@@ -19,17 +19,17 @@ const generateDallePrompt = () => {
   ];
 
   const poses = [
-    "walking confidently and adjusting her top",
+    "walking confidently and adjusting her top while laughing",
     "stretching her arms while smiling at something off-camera",
-    "sipping a cold drink and leaning against a wall",
-    "tying her hair up while walking down a sunny street",
-    "checking her phone while seated with legs crossed",
-    "pulling her shirt down slightly as she adjusts it mid-walk",
-    "brushing hair out of her face while laughing",
-    "holding a shopping bag and biting her lip playfully",
-    "looking over her sunglasses while leaning on a railing",
-    "dancing to music with earbuds in, unaware of the camera",
-    "standing with her back but looking at you over her shoulder",
+    "sipping a cold drink and leaning against a wall while laughing",
+    "tying her hair up while walking down a sunny street while laughing",
+    "checking her phone while seated with legs crossed while laughing",
+    "pulling her shirt down slightly as she adjusts it mid-walk while laughing",
+    "brushing hair out of her face while laughing while laughing",
+    "holding a shopping bag and biting her lip playfully while laughing",
+    "looking over her sunglasses while leaning on a railing while laughing",
+    "dancing to music with earbuds in, unaware of the camera while laughing",
+    "standing with her back but looking at you over her shoulder while laughing",
   ];
 
   const groupPoses = [
@@ -125,8 +125,8 @@ const generateDallePrompt = () => {
     "early morning city light with long shadows",
   ];
 
-  const isGroup = Math.random() < 0.3;
-  // const isGroup = true;
+  // const isGroup = Math.random() < 0.3;
+  const isGroup = false;
 
   const mainAction = isGroup ? random(groupPoses) : random(poses);
   const location = random(locations);
@@ -169,10 +169,10 @@ const generateDallePrompt = () => {
     subject = `a ${nationality1} and a ${nationality2} extra plus-size woman`;
   } else {
     outfit = getOutfit();
-    subject = `a confident, seductive ${nationality1} extra plus-size woman`;
+    subject = `a confident, beautiful ${nationality1} extra plus-size woman`;
   }
 
-  const prompt = `Ultra-realistic cinematic photo of ${subject} ${mainAction} ${location}, ${outfit}. Lighting is ${light}. Mood is ${mood}. Focus on glowing skin, natural curves, strong eye contact, soft lips, and captivating posture. Full body visible. Clothing must be casual, real-world, and worn outdoors — no lingerie, no nudity, no beds, no NSFW setting. Highly detailed, no studio backdrop, strictly no nudity, women strictly must be extra plus-size (fat) about 120kg.`;
+  const prompt = `Ultra-realistic cinematic photo of ${subject} ${mainAction} ${location}, ${outfit}. Lighting is ${light}. Mood is ${mood}. Focus on glowing skin, natural curves, strong eye contact, soft lips, and captivating posture. Full body visible. Clothing must be casual, real-world, and worn outdoors — no lingerie, no nudity, no beds, no NSFW setting. Highly detailed, no studio backdrop, strictly no nudity and strictly no NSFW setting, women strictly must be extra plus-size (fat) about 120kg. Not naked`;
 
   return prompt;
 };

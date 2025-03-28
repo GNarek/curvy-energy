@@ -136,7 +136,7 @@ ${prompt}
 
 const getCallToAction = () => {
   const ctas = [
-    "If you like me, send a ❤️ in the comments 😉",
+    "Do I deserve a like? 👍",
     "Drop a ❤️ if you love curves",
     "Send a 💋 and I’ll send one back",
   ];

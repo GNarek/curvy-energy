@@ -5,40 +5,6 @@ const { generateDallePrompt } = require("./image-prompt");
 
 const GOENHANCE_API_KEY = process.env.GOENHANCE_API_KEY;
 
-// Step 1: Send text-to-image request
-// async function generateImage() {
-//   try {
-//     const response = await axios.post(
-//       "https://api.goenhance.ai/api/v1/text2image/generate",
-//       {
-//         args: {
-//           seed: -1,
-//           prompt: generateDallePrompt(),
-//           negative_prompt:
-//             "worst quality,low quality, normal quality, lowres, bad anatomy, bad hands, text, error, nsfw",
-//           ratio: "1:1",
-//           model: 12,
-//           batch_size: 1,
-//         },
-//         type: "mx-text2img",
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${GOENHANCE_API_KEY}`,
-//           "Content-Type": "application/json",
-//         },
-//       }
-//     );
-
-//     const { img_uuid } = response.data.data;
-//     console.log("Image UUID:", img_uuid);
-//     return img_uuid;
-//   } catch (error) {
-//     console.error("Error generating image:", error.message);
-//     throw error;
-//   }
-// }
-
 // Step 2: Poll the image result
 async function getImageResult(img_uuid) {
   const MAX_RETRIES = 100;
