@@ -1,6 +1,14 @@
-const { createCanvas } = require("canvas");
+const { createCanvas, registerFont } = require("canvas");
 const fs = require("fs");
 const path = require("path");
+
+// Register BebasNeue font
+registerFont(
+  path.resolve(__dirname, "../../assets/fonts/BebasNeue-Regular.ttf"),
+  {
+    family: "BebasNeue",
+  }
+);
 
 /**
  * Splits the input text into multiple lines such that each line
@@ -8,13 +16,13 @@ const path = require("path");
  *
  * @param {string} text - The full caption text
  * @param {number} maxWidth - Maximum width (e.g., 1000px)
- * @param {string} font - The font to measure against (e.g., "64px Arial Bold")
+ * @param {string} font - The font to measure against (e.g., "64px BebasNeue")
  * @returns {string[]} array of lines
  */
 function splitIntoFittingLines(
   text,
   maxWidth = 1000,
-  font = "64px Arial Bold",
+  font = "64px BebasNeue",
   minLines = 2
 ) {
   const canvas = createCanvas(10, 10);
@@ -92,7 +100,7 @@ function drawRoundedRect(ctx, x, y, width, height, radius) {
 }
 
 /**
- * Generate a single-line image in "Pornhub style":
+ * Generate a single-line image caption:
  *  - The first word is drawn in white on a black background.
  *  - The remaining words are drawn with black text over an orange rounded rectangle.
  *  - The black box uses overall horizontal and vertical padding.
@@ -104,7 +112,7 @@ function drawRoundedRect(ctx, x, y, width, height, radius) {
  */
 function generateSingleLineImage(line, fileName) {
   const fontSize = 64;
-  const font = `${fontSize}px Arial Bold`;
+  const font = `${fontSize}px BebasNeue`;
   const overallHPad = 20; // horizontal padding for the black box
   const overallVPad = 20; // vertical padding for the black box
   const orangeHPad = 10; // horizontal padding inside the orange box
@@ -198,7 +206,7 @@ function generateSingleLineImage(line, fileName) {
  * @returns {string[]} array of file paths
  */
 function generateCaptions(caption) {
-  const font = "64px Arial Bold";
+  const font = "64px BebasNeue";
   const maxWidth = 1000; // adjust as needed based on screen limits
   const lines = splitIntoFittingLines(caption, maxWidth, font);
   const filePaths = [];
