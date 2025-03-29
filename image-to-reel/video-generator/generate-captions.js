@@ -119,10 +119,11 @@ function generateSingleLineImage(line, fileName) {
   const orangeVPad = 5; // vertical padding for the orange box (independent)
   const cornerRadius = 10;
 
-  // Split the line into the first word and the rest.
-  const words = line.trim().split(" ");
-  const leftText = words[0] || "";
-  const rightText = words.slice(1).join(" ");
+  // Split the line into the half parts.
+  const words = line.trim().split(/\s+/);
+  const splitIndex = Math.floor(words.length / 2);
+  const leftText = words.slice(0, splitIndex).join(" ");
+  const rightText = words.slice(splitIndex).join(" ");
 
   // Create a temporary canvas to measure text widths.
   const tempCanvas = createCanvas(800, 200);

@@ -12,13 +12,13 @@ const { generateCaptions } = require("./generate-captions");
  * and optional audio.
  *
  * @param {string} imagePath - Prepared 1080x1920 image.
- * @param {string|string[]} captionLines - Up to 3 lines total.
+ * @param {string|string[]} text - Up to 3 lines total.
  * @param {string} outputPath - MP4 output path.
  * @param {string|null} audioPath - Optional MP3 audio.
  */
 const buildReelVideo = async (
   imagePath,
-  captionLines,
+  text,
   outputPath,
   audioPath = null
 ) => {
@@ -27,7 +27,7 @@ const buildReelVideo = async (
   const totalFrames = videoDuration * frameRate;
 
   // Generate separate caption images, one per line
-  const linePaths = generateCaptions(captionLines);
+  const linePaths = generateCaptions(text);
 
   // Build main video effect filters
   const effectFilters = [
