@@ -1,7 +1,45 @@
+require("dotenv").config();
 const axios = require("axios");
-const cheerio = require("cheerio");
+const fs = require("fs");
+const FormData = require("form-data");
+const path = require("path");
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
+const getRandomQuote = () => {
+  const quotesPath = path.resolve(__dirname, "../assets/quotes/quotes.json");
+  console.log("quotesPath", quotesPath);
+  const raw = fs.readFileSync(quotesPath, "utf-8");
+  const quotes = JSON.parse(raw);
+
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  return randomQuote.quote; // Only return the quote, not author
+};
+
+const postVideoToFacebook = async (
+  message,
+  videoPath,
+  PAGE_ID,
+  PAGE_ACCESS_TOKEN
+) => {
+  const form = new FormData();
+
+  form.append("description", message);
+  form.append("access_token", PAGE_ACCESS_TOKEN);
+  form.append("source", fs.createReadStream(videoPath));
+
+  const res = await axios.post(
+    `https://graph.facebook.com/${PAGE_ID}/videos`,
+    form,
+    {
+      headers: {
+        ...form.getHeaders(),
+      },
+    }
+  );
+
+  return res.data.id;
+};
 
 const postPhotoToFacebook = async (
   message,
@@ -30,8 +68,8 @@ const generateImageWithGoEnhancePrompt = async (prompt) => {
           seed: -1,
           prompt,
           negative_prompt:
-            "worst quality, low quality, lowres, normal quality, bad anatomy, bad hands, text, watermark, error, nsfw, nude, topless, naked, see-through, sheer, mesh clothing, thong, bikini, underwear, exposed nipples, nipple covers, erotic, lingerie, bed, pose with no top, open shirt with no bra, fully exposed chest, open robe, straddling, sex toy, censored, mosaic, extreme cleavage, pornographic",
-          ratio: "1:1",
+            "nudity, worst quality, low quality, lowres, normal quality, bad anatomy, bad hands, text, watermark, error, nsfw, nude, topless, naked, see-through, sheer, mesh clothing, thong, bikini, underwear, exposed nipples, nipple covers, erotic, lingerie, bed, pose with no top, open shirt with no bra, fully exposed chest, open robe, straddling, sex toy, censored, mosaic, extreme cleavage, pornographic",
+          ratio: "9:16",
           model: 12,
           batch_size: 1,
         },
@@ -143,9 +181,18 @@ const getCallToAction = () => {
   return ctas[Math.floor(Math.random() * ctas.length)];
 };
 
+const getPostType = () => {
+  const roll = Math.random();
+
+  return roll < 0.7 ? "video" : "image";
+};
+
 module.exports = {
   generateImageWithGoEnhancePrompt,
   generateCurvyWomanCaption,
   getCallToAction,
   postPhotoToFacebook,
+  postVideoToFacebook,
+  getRandomQuote,
+  getPostType,
 };
