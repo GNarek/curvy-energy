@@ -30,4 +30,6 @@ jobs:
           PAGE_ACCESS_TOKEN: ${{ secrets.PAGE_ACCESS_TOKEN }}
           GIST_TOKEN: ${{ secrets.GIST_TOKEN }}
           GIST_ID: ${{ secrets.GIST_ID }}
+          SIGHTENGINE_USER: ${{ secrets.SIGHTENGINE_USER }}
+          SIGHTENGINE_SECRET: ${{ secrets.SIGHTENGINE_SECRET }}
         run: node poster.js

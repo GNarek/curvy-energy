@@ -55,70 +55,6 @@ const postPhotoToFacebook = async (
   return res.data.post_id;
 };
 
-const generateImageWithGoEnhancePrompt = async (prompt) => {
-  const GOENHANCE_API_KEY = process.env.GOENHANCE_API_KEY;
-  const axios = require("axios");
-
-  // Step 1: Generate image UUID
-  const generateImage = async () => {
-    const response = await axios.post(
-      "https://api.goenhance.ai/api/v1/text2image/generate",
-      {
-        args: {
-          seed: -1,
-          prompt,
-          negative_prompt:
-            "nudity, worst quality, low quality, lowres, normal quality, bad anatomy, bad hands, text, watermark, error, nsfw, nude, topless, naked, see-through, sheer, mesh clothing, thong, bikini, underwear, exposed nipples, nipple covers, erotic, lingerie, bed, pose with no top, open shirt with no bra, fully exposed chest, open robe, straddling, sex toy, censored, mosaic, extreme cleavage, pornographic",
-          ratio: "9:16",
-          model: 12,
-          batch_size: 1,
-        },
-        type: "mx-text2img",
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${GOENHANCE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data.data.img_uuid;
-  };
-
-  // Step 2: Poll job until image is ready
-  const getImageResult = async (img_uuid) => {
-    const MAX_RETRIES = 100;
-    const DELAY_MS = 10000;
-
-    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-      const res = await axios.get(
-        `https://api.goenhance.ai/api/v1/jobs/detail?img_uuid=${img_uuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${GOENHANCE_API_KEY}`,
-          },
-        }
-      );
-
-      const { status, json } = res.data.data;
-
-      if (status === "success" && json && json[0]?.value) {
-        return json[0].value;
-      }
-
-      console.log(
-        `⏳ Attempt ${attempt + 1}), status: ${status}, img_uuid: ${img_uuid},`
-      );
-      await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
-    }
-
-    throw new Error("GoEnhance image generation timed out.");
-  };
-
-  const img_uuid = await generateImage();
-  return await getImageResult(img_uuid);
-};
-
 const generateCurvyWomanCaption = async (prompt) => {
   const res = await axios.post(
     "https://api.openai.com/v1/chat/completions",
@@ -188,7 +124,6 @@ const getPostType = () => {
 };
 
 module.exports = {
-  generateImageWithGoEnhancePrompt,
   generateCurvyWomanCaption,
   getCallToAction,
   postPhotoToFacebook,

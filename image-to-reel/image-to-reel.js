@@ -6,17 +6,9 @@ const {
 } = require("./video-generator/prepare-vertical-image");
 const { buildReelVideo } = require("./video-generator/reel-generator");
 const { downloadImage } = require("./downloadImage");
+const { ORIGINAL_IMAGE_PATH, PREPARED_IMAGE_PATH } = require("./paths");
 
 const imageToReel = async (imageUrl, text, outputPath) => {
-  const originalImagePath = path.resolve(
-    __dirname,
-    "../assets/temp/reel-image.jpg"
-  );
-  const preppedImage = path.resolve(
-    __dirname,
-    "../assets/temp/prepared-image.jpg"
-  );
-
   /**
    * Returns the full path to a random .mp3 file from the audio folder
    */
@@ -34,13 +26,13 @@ const imageToReel = async (imageUrl, text, outputPath) => {
 
   const audioPath = getRandomAudioPath();
 
-  await downloadImage(imageUrl, originalImagePath);
+  await downloadImage(imageUrl, ORIGINAL_IMAGE_PATH);
 
   console.log("📥 Preparing image...");
-  await prepareImageForReel(originalImagePath, preppedImage);
+  await prepareImageForReel(ORIGINAL_IMAGE_PATH, PREPARED_IMAGE_PATH);
 
   console.log("🎬 Building reel...");
-  await buildReelVideo(preppedImage, text, outputPath, audioPath);
+  await buildReelVideo(PREPARED_IMAGE_PATH, text, outputPath, audioPath);
 
   console.log("✅ Done:", outputPath);
 };
