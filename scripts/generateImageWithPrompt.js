@@ -7,9 +7,12 @@ const GOENHANCE_API_KEY = process.env.GOENHANCE_API_KEY;
 /**
  * Generates an image from GoEnhance using a prompt, polling until complete.
  * @param {string} prompt
+ * @param {number} retryCount - Internal use for limiting safety retries
  * @returns {Promise<string>} - Final image URL
  */
-const generateImageWithPrompt = async (prompt) => {
+const generateImageWithPrompt = async (prompt, retryCount = 0) => {
+  const MAX_SAFETY_RETRIES = 5;
+
   // Step 1: Request image generation
   const generateImage = async () => {
     const response = await axios.post(
@@ -66,22 +69,29 @@ const generateImageWithPrompt = async (prompt) => {
     throw new Error("GoEnhance image generation timed out.");
   };
 
-  console.log("Starting to generate image...");
+  console.log(
+    `🎨 Generating image (try ${retryCount + 1}/${MAX_SAFETY_RETRIES})...`
+  );
   const img_uuid = await generateImage();
   const imageUrl = await getImageResult(img_uuid);
-  console.log("Image generated:", imageUrl);
+  console.log("🖼️ Image generated:", imageUrl);
 
-  console.log("Checking image for safety...");
+  console.log("🔍 Checking image for safety...");
   const result = await checkImageSafety(imageUrl);
-
-  console.log("Safety is checked", result);
 
   if (!result.flagged) {
     console.log("✅ The image is safe.");
     return imageUrl;
   } else {
-    console.log("❌ The image isn't safe. Regenerating...");
-    return generateImageWithPrompt(prompt);
+    console.warn("❌ The image isn't safe. Regenerating...");
+
+    if (retryCount + 1 >= MAX_SAFETY_RETRIES) {
+      throw new Error(
+        `Image failed safety check after ${MAX_SAFETY_RETRIES} attempts.`
+      );
+    }
+
+    return generateImageWithPrompt(prompt, retryCount + 1);
   }
 };
 
