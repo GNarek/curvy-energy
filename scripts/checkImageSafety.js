@@ -25,8 +25,7 @@ const checkImageSafety = async (imageUrl) => {
     const flagged =
       nudity.raw > 0.01 ||
       nudity.partial > 0.2 ||
-      nudity.erotica > 0.7 || // High erotic energy
-      nudity.very_suggestive > 0.98 || // Might contain open parts
+      nudity.erotica > 0.001 || // Risk of having erotic
       nudity.sexual_display > 0.1 || // just in case it triggers
       nudity.suggestive_classes.cleavage_categories?.very_revealing > 0.3;
 
