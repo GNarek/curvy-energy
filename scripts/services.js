@@ -1,15 +1,15 @@
-require("dotenv").config();
-const axios = require("axios");
-const fs = require("fs");
-const FormData = require("form-data");
-const path = require("path");
+require('dotenv').config();
+const axios = require('axios');
+const fs = require('fs');
+const FormData = require('form-data');
+const path = require('path');
 
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const { OPENAI_API_KEY } = process.env;
 
 const getRandomQuote = () => {
-  const quotesPath = path.resolve(__dirname, "../assets/quotes/quotes.json");
-  console.log("quotesPath", quotesPath);
-  const raw = fs.readFileSync(quotesPath, "utf-8");
+  const quotesPath = path.resolve(__dirname, '../assets/quotes/quotes.json');
+  console.log('quotesPath', quotesPath);
+  const raw = fs.readFileSync(quotesPath, 'utf-8');
   const quotes = JSON.parse(raw);
 
   const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
@@ -20,13 +20,13 @@ const postVideoToFacebook = async (
   message,
   videoPath,
   PAGE_ID,
-  PAGE_ACCESS_TOKEN
+  PAGE_ACCESS_TOKEN,
 ) => {
   const form = new FormData();
 
-  form.append("description", message);
-  form.append("access_token", PAGE_ACCESS_TOKEN);
-  form.append("source", fs.createReadStream(videoPath));
+  form.append('description', message);
+  form.append('access_token', PAGE_ACCESS_TOKEN);
+  form.append('source', fs.createReadStream(videoPath));
 
   const res = await axios.post(
     `https://graph.facebook.com/${PAGE_ID}/videos`,
@@ -35,7 +35,7 @@ const postVideoToFacebook = async (
       headers: {
         ...form.getHeaders(),
       },
-    }
+    },
   );
 
   return res.data.id;
@@ -45,7 +45,7 @@ const postPhotoToFacebook = async (
   message,
   imageUrl,
   PAGE_ID,
-  PAGE_ACCESS_TOKEN
+  PAGE_ACCESS_TOKEN,
 ) => {
   const res = await axios.post(`https://graph.facebook.com/${PAGE_ID}/photos`, {
     caption: message,
@@ -57,12 +57,12 @@ const postPhotoToFacebook = async (
 
 const generateCurvyWomanCaption = async (prompt) => {
   const res = await axios.post(
-    "https://api.openai.com/v1/chat/completions",
+    'https://api.openai.com/v1/chat/completions',
     {
-      model: "gpt-4",
+      model: 'gpt-4',
       messages: [
         {
-          role: "user",
+          role: 'user',
           content: `
 Write a short Facebook post caption written in the voice of a confident plus-size woman (or two women), shown in a photo wearing casual, revealing clothing. The tone can be bold, soft, emotional, or flirty — but it should feel like her own words, not a third-party narrator.
 
@@ -89,9 +89,9 @@ ${prompt}
     {
       headers: {
         Authorization: `Bearer ${OPENAI_API_KEY}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-    }
+    },
   );
 
   const raw = res.data.choices[0].message.content.trim();
@@ -103,16 +103,16 @@ ${prompt}
       hashtags: parsed.hashtags.trim(),
     };
   } catch (err) {
-    console.error("❌ Failed to parse caption JSON:", raw);
+    console.error('❌ Failed to parse caption JSON:', raw);
     throw err;
   }
 };
 
 const getCallToAction = () => {
   const ctas = [
-    "Do I deserve a like? 👍",
-    "Drop a ❤️ if you love curves",
-    "Send a 💋 and I’ll send one back",
+    'Do I deserve a like? 👍',
+    'Drop a ❤️ if you love curves',
+    'Send a 💋 and I’ll send one back',
   ];
   return ctas[Math.floor(Math.random() * ctas.length)];
 };
@@ -120,7 +120,7 @@ const getCallToAction = () => {
 const getPostType = () => {
   const roll = Math.random();
 
-  return roll < 0.7 ? "video" : "image";
+  return roll < 0.7 ? 'video' : 'image';
 };
 
 module.exports = {
