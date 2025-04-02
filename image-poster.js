@@ -20,27 +20,21 @@ const imagePoster = async () => {
   const imageUrl = await generateImageWithPrompt(dallePrompt);
   console.log('🖼️ Image URL:', imageUrl);
 
-  return;
-
   if (!imageUrl) {
     return;
   }
 
-  const {
-    // caption,
-    hashtags,
-  } = await generateCurvyWomanCaption(dallePrompt);
+  const { caption, hashtags } = await generateCurvyWomanCaption(dallePrompt);
 
+  const message = `${getCallToAction()}\n\n${caption}\n\n#CurvyEnergy, ${hashtags}`;
   const quote = getRandomQuote();
-
-  const message = `${getCallToAction()}\n\n${quote}\n\n${hashtags}`;
 
   console.log('✅ Posting image to Facebook...');
   const postId = await imagePosterFacebook(imageUrl, message);
   console.log('✅ Image posted to Facebook:', postId);
 
   console.log('📸 Posting image to Instagram...');
-  await imagePosterInstagram(imageUrl, message);
+  await imagePosterInstagram(imageUrl, message, quote);
   console.log('✅ Image posted to Instagram');
 };
 

@@ -64,9 +64,7 @@ const generateCurvyWomanCaption = async (prompt) => {
         {
           role: 'user',
           content: `
-Write a short Facebook post caption written in the voice of a confident plus-size woman (or two women), shown in a photo wearing casual, revealing clothing. The tone can be bold, soft, emotional, or flirty — but it should feel like her own words, not a third-party narrator.
-
-Make it sound personal, like something she’d post to her own page or story — a message to her followers, the world, or herself.
+Write a short, powerful body-positive motivational caption (under 30 words) that sounds confident, emotional, and uplifting. It should celebrate curvy, plus-size women and promote self-love. The tone should be feminine, empowering, and Instagram-friendly. Make it reel-caption ready.
 
 Return your response in **strict JSON format** like this:
 
@@ -77,11 +75,7 @@ Return your response in **strict JSON format** like this:
 
 Avoid any explanation. No photo description. No generic affirmations. The caption should feel personal, real, and a little bold. Like something someone might write in their journal or post when they’re finally done shrinking.
 
-Do not include any extra text or formatting.
-
-### Image Prompt:
-${prompt}
-        `.trim(),
+Do not include any extra text or formatting.`.trim(),
         },
       ],
       max_tokens: 300,
@@ -110,9 +104,9 @@ ${prompt}
 
 const getCallToAction = () => {
   const ctas = [
-    'Do I deserve a like? 👍',
+    'Follow me for more... ❤️',
     'Drop a ❤️ if you love curves',
-    'Send a 💋 and I’ll send one back',
+    'Send a ❤️ and I’ll send one back',
   ];
   return ctas[Math.floor(Math.random() * ctas.length)];
 };

@@ -21,7 +21,6 @@ const generateImageWithPrompt = async (prompt, retryCount = 0) => {
     const response = await axios.post(
       'https://api.goenhance.ai/api/v1/text2image/generate',
       {
-        // 17435994462779
         args: {
           seed,
           prompt: retryCount > 0 ? generateDallePrompt() : prompt,

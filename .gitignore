@@ -1,5 +1,17 @@
 .env
 dev.notes
+seeds.js
+assets/temp/prepared-image.jpg
+assets/temp/reel-image.jpg
+image-to-reel/video-generator/caption-line1.png
+image-to-reel/video-generator/caption-line2.png
+image-to-reel/video-generator/caption-line3.png
+image-to-reel/video-generator/caption-line4.png
+image-to-reel/video-generator/caption-line5.png
+image-to-reel/video-generator/caption-line6.png
+image-to-reel/video-generator/caption-line7.png
+image-to-reel/video-generator/caption-line8.png
+image-to-reel/video-generator/caption-line9.png
 node_modules/
 .DS_Store
 assets/output/

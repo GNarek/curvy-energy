@@ -159,9 +159,6 @@ const deleteVideoFromCloudinary = async (publicId) => {
 // 💬 Comment under the IG post
 const postCommentToInstagram = async (igMediaId, text) => {
   // eslint-disable-next-line no-constant-condition
-  if (true) {
-    console.log('🚀 Quote wont be posted. Skipped', text);
-  }
   const endpoint = `https://graph.facebook.com/v19.0/${igMediaId}/comments`;
   const params = {
     message: text,
@@ -180,7 +177,7 @@ const videoPosterInstagram = async (message, quote) => {
   console.log('✅ Video uploaded!');
 
   console.log('📦 Creating Instagram video container...');
-  const creationId = await createInstagramVideoContainer(url, quote);
+  const creationId = await createInstagramVideoContainer(url, message);
 
   console.log('⏳ Waiting 10 seconds for Instagram to process the media...');
   // eslint-disable-next-line no-promise-executor-return
@@ -195,11 +192,12 @@ const videoPosterInstagram = async (message, quote) => {
   await deleteVideoFromCloudinary(publicId);
   console.log('🗑️ Cloudinary cleanup complete.');
 
-  // console.log('💬 Posting quote under the Reel...');
-  // await postCommentToInstagram(igPostId, quote);
-  // console.log('✅ Quote commented under Reel!');
+  console.log('💬 Posting quote under the Reel...');
+  await postCommentToInstagram(igPostId, quote);
+  console.log('✅ Quote commented under Reel!');
 };
 
 module.exports = {
   videoPosterInstagram,
+  postCommentToInstagram,
 };

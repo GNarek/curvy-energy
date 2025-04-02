@@ -1,5 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
+const { postCommentToInstagram } = require('./video-poster-instagram');
 
 const { IG_USER_ID, IG_ACCESS_TOKEN } = process.env;
 
@@ -22,7 +23,7 @@ const isMediaReady = async (creationId) => {
 };
 
 // Main function
-const imagePosterInstagram = async (imageUrl, caption) => {
+const imagePosterInstagram = async (imageUrl, caption, quote) => {
   try {
     // Step 1: Create media container
     const containerRes = await axios.post(
@@ -69,8 +70,17 @@ const imagePosterInstagram = async (imageUrl, caption) => {
       },
     );
 
-    console.log('✅ Image posted to Instagram:', publishRes.data.id);
-    return publishRes.data.id;
+    const postId = publishRes.data.id;
+    console.log('✅ Image posted to Instagram:', postId);
+
+    // Step 4: Post quote as comment
+    if (quote) {
+      console.log('💬 Posting quote under the image...');
+      await postCommentToInstagram(postId, quote);
+      console.log('✅ Quote commented under image!');
+    }
+
+    return postId;
   } catch (err) {
     console.error(
       '❌ Failed to post image to Instagram:',
