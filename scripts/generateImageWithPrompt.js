@@ -22,7 +22,7 @@ const generateImageWithPrompt = async (prompt, retryCount = 0) => {
       'https://api.goenhance.ai/api/v1/text2image/generate',
       {
         args: {
-          seed,
+          seed: 1743628150594,
           prompt: retryCount > 0 ? generateDallePrompt() : prompt,
           negative_prompt:
             '5 fingers, worst quality, low quality, lowres, normal quality, bad anatomy, bad hands, deformed fingers, extra fingers, fused fingers, long fingers, blurry fingers, twisted hands, distorted limbs, text, watermark, error, nsfw, nude, topless, naked, see-through, sheer, mesh clothing, thong, bikini, underwear, exposed nipples, nipple covers, erotic, lingerie, bed, pose with no top, open shirt with no bra, fully exposed chest, open robe, straddling, sex toy, censored, mosaic, extreme cleavage, pornographic',

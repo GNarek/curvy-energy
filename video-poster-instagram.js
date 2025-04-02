@@ -93,7 +93,7 @@ const createInstagramVideoContainer = async (videoUrl, caption) => {
       return creationId;
     }
 
-    if (status === 'ERROR' || attempt >= 10) {
+    if (status === 'ERROR' || attempt >= 30) {
       throw new Error(
         `❌ IG container failed or took too long (status: ${status})`,
       );
