@@ -1,8 +1,9 @@
-require("dotenv").config();
-const axios = require("axios");
-const { checkImageSafety } = require("./checkImageSafety");
+require('dotenv').config();
+const axios = require('axios');
+const { checkImageSafety } = require('./checkImageSafety');
+const { generateDallePrompt } = require('../prompts/image-prompt');
 
-const GOENHANCE_API_KEY = process.env.GOENHANCE_API_KEY;
+const { GOENHANCE_API_KEY } = process.env;
 
 /**
  * Generates an image from GoEnhance using a prompt, polling until complete.
@@ -15,27 +16,31 @@ const generateImageWithPrompt = async (prompt, retryCount = 0) => {
 
   // Step 1: Request image generation
   const generateImage = async () => {
+    const seed = new Date().getTime();
+    console.log('Seed:', seed);
     const response = await axios.post(
-      "https://api.goenhance.ai/api/v1/text2image/generate",
+      'https://api.goenhance.ai/api/v1/text2image/generate',
       {
+        // 17435994462779
         args: {
-          seed: -1,
-          prompt,
+          seed,
+          prompt: retryCount > 0 ? generateDallePrompt() : prompt,
           negative_prompt:
-            "worst quality, low quality, lowres, normal quality, bad anatomy, bad hands, deformed fingers, extra fingers, fused fingers, long fingers, blurry fingers, twisted hands, distorted limbs, text, watermark, error, nsfw, nude, topless, naked, see-through, sheer, mesh clothing, thong, bikini, underwear, exposed nipples, nipple covers, erotic, lingerie, bed, pose with no top, open shirt with no bra, fully exposed chest, open robe, straddling, sex toy, censored, mosaic, extreme cleavage, pornographic",
-          ratio: "9:16",
-          model: 12,
+            '5 fingers, worst quality, low quality, lowres, normal quality, bad anatomy, bad hands, deformed fingers, extra fingers, fused fingers, long fingers, blurry fingers, twisted hands, distorted limbs, text, watermark, error, nsfw, nude, topless, naked, see-through, sheer, mesh clothing, thong, bikini, underwear, exposed nipples, nipple covers, erotic, lingerie, bed, pose with no top, open shirt with no bra, fully exposed chest, open robe, straddling, sex toy, censored, mosaic, extreme cleavage, pornographic',
+          ratio: '9:16',
+          model: 12, // 3 // 12
           batch_size: 1,
         },
-        type: "mx-text2img",
+        type: 'mx-text2img',
       },
       {
         headers: {
           Authorization: `Bearer ${GOENHANCE_API_KEY}`,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      }
+      },
     );
+
     return response.data.data.img_uuid;
   };
 
@@ -51,48 +56,47 @@ const generateImageWithPrompt = async (prompt, retryCount = 0) => {
           headers: {
             Authorization: `Bearer ${GOENHANCE_API_KEY}`,
           },
-        }
+        },
       );
 
       const { status, json } = res.data.data;
 
-      if (status === "success" && json && json[0]?.value) {
+      if (status === 'success' && json && json[0]?.value) {
         return json[0].value;
       }
 
       console.log(
-        `⏳ Attempt ${attempt + 1}), status: ${status}, img_uuid: ${img_uuid}`
+        `⏳ Attempt ${attempt + 1}), status: ${status}, img_uuid: ${img_uuid}`,
       );
       await new Promise((resolve) => setTimeout(resolve, DELAY_MS));
     }
 
-    throw new Error("GoEnhance image generation timed out.");
+    throw new Error('GoEnhance image generation timed out.');
   };
 
   console.log(
-    `🎨 Generating image (try ${retryCount + 1}/${MAX_SAFETY_RETRIES})...`
+    `🎨 Generating image (try ${retryCount + 1}/${MAX_SAFETY_RETRIES})...`,
   );
   const img_uuid = await generateImage();
   const imageUrl = await getImageResult(img_uuid);
-  console.log("🖼️ Image generated:", imageUrl);
+  console.log('🖼️ Image generated:', imageUrl);
 
-  console.log("🔍 Checking image for safety...");
+  console.log('🔍 Checking image for safety...');
   const result = await checkImageSafety(imageUrl);
 
   if (!result.flagged) {
-    console.log("✅ The image is safe.");
+    console.log('✅ The image is safe.');
     return imageUrl;
-  } else {
-    console.warn("❌ The image isn't safe. Regenerating...");
-
-    if (retryCount + 1 >= MAX_SAFETY_RETRIES) {
-      throw new Error(
-        `Image failed safety check after ${MAX_SAFETY_RETRIES} attempts.`
-      );
-    }
-
-    return generateImageWithPrompt(prompt, retryCount + 1);
   }
+  console.warn("❌ The image isn't safe. Regenerating...");
+
+  if (retryCount + 1 >= MAX_SAFETY_RETRIES) {
+    throw new Error(
+      `Image failed safety check after ${MAX_SAFETY_RETRIES} attempts.`,
+    );
+  }
+
+  return generateImageWithPrompt(prompt, retryCount + 1);
 };
 
 module.exports = { generateImageWithPrompt };

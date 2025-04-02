@@ -1,5 +1,5 @@
-require("dotenv").config();
-const axios = require("axios");
+require('dotenv').config();
+const axios = require('axios');
 
 /**
  * Uses Sightengine API to check if image contains nudity.
@@ -10,22 +10,22 @@ const axios = require("axios");
  */
 const checkImageSafety = async (imageUrl) => {
   try {
-    const res = await axios.get("https://api.sightengine.com/1.0/check.json", {
+    const res = await axios.get('https://api.sightengine.com/1.0/check.json', {
       params: {
         url: imageUrl,
-        models: "nudity-2.1",
+        models: 'nudity-2.1',
         api_user: process.env.SIGHTENGINE_USER,
         api_secret: process.env.SIGHTENGINE_SECRET,
       },
     });
 
     const { nudity } = res.data;
-    console.log("🔎 Sightengine result:", nudity);
+    console.log('🔎 Sightengine result:', nudity);
 
     const flagged =
       nudity.raw > 0.01 ||
       nudity.partial > 0.2 ||
-      nudity.erotica > 0.001 || // Risk of having erotic
+      nudity.erotica > 0.01 || // Risk of having erotic
       nudity.sexual_display > 0.1 || // just in case it triggers
       nudity.suggestive_classes.cleavage_categories?.very_revealing > 0.3;
 
@@ -39,10 +39,10 @@ const checkImageSafety = async (imageUrl) => {
     return { flagged, issues };
   } catch (err) {
     console.warn(
-      "⚠️ Sightengine API error:",
-      err?.response?.data || err.message
+      '⚠️ Sightengine API error:',
+      err?.response?.data || err.message,
     );
-    return { flagged: false, issues: ["Sightengine API failed"] };
+    return { flagged: false, issues: ['Sightengine API failed'] };
   }
 };
 

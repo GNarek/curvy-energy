@@ -7,7 +7,7 @@ const { imagePoster } = require('./image-poster');
   const postType = getPostType();
   console.log(`🎲 Random pick: Posting a ${postType.toUpperCase()}`);
 
-  if (postType === 'video') {
+  if (postType === 'video' && false) {
     await videoPoster();
   } else {
     await imagePoster();

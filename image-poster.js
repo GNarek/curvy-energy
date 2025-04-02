@@ -20,6 +20,8 @@ const imagePoster = async () => {
   const imageUrl = await generateImageWithPrompt(dallePrompt);
   console.log('🖼️ Image URL:', imageUrl);
 
+  return;
+
   if (!imageUrl) {
     return;
   }
