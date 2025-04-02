@@ -53,7 +53,9 @@ const uploadVideoToCloudinary = async (localPath) => {
         if (attempt > 20) {
           throw new Error('Cloudinary eager transformation took too long.');
         }
+        // eslint-disable-next-line no-promise-executor-return
         await new Promise((r) => setTimeout(r, 5000));
+        // eslint-disable-next-line no-return-await
         return await waitForEager(attempt + 1);
       }
 
@@ -68,8 +70,6 @@ const uploadVideoToCloudinary = async (localPath) => {
 };
 
 const createInstagramVideoContainer = async (videoUrl, caption) => {
-  console.log('📦 Creating IG container...');
-
   const endpoint = `https://graph.facebook.com/v19.0/${IG_USER_ID}/media`;
   const params = {
     video_url: videoUrl,
@@ -102,10 +102,12 @@ const createInstagramVideoContainer = async (videoUrl, caption) => {
     console.log(
       `⏳ Waiting for IG container to be ready... (attempt ${attempt})`,
     );
+    // eslint-disable-next-line no-promise-executor-return
     await new Promise((r) => setTimeout(r, 5000)); // wait 3s
     return checkStatus(attempt + 1);
   };
 
+  // eslint-disable-next-line no-return-await
   return await checkStatus();
 };
 
@@ -139,7 +141,9 @@ const publishInstagramMedia = async (creationId, attempt = 1) => {
     if (isMediaNotReady) {
       if (attempt > 20)
         throw new Error('Instagram media publish took too long.');
+      // eslint-disable-next-line no-promise-executor-return
       await new Promise((r) => setTimeout(r, 5000)); // wait 5s
+      // eslint-disable-next-line no-return-await
       return await publishInstagramMedia(creationId, attempt + 1);
     }
 
@@ -154,6 +158,10 @@ const deleteVideoFromCloudinary = async (publicId) => {
 
 // 💬 Comment under the IG post
 const postCommentToInstagram = async (igMediaId, text) => {
+  // eslint-disable-next-line no-constant-condition
+  if (true) {
+    console.log('🚀 Quote wont be posted. Skipped', text);
+  }
   const endpoint = `https://graph.facebook.com/v19.0/${igMediaId}/comments`;
   const params = {
     message: text,
@@ -169,14 +177,17 @@ const videoPosterInstagram = async (message, quote) => {
   console.log('📤 Uploading video to Cloudinary...');
   const { url, public_id: publicId } =
     await uploadVideoToCloudinary(videoOutputPath);
+  console.log('✅ Video uploaded!');
 
   console.log('📦 Creating Instagram video container...');
   const creationId = await createInstagramVideoContainer(url, message);
 
   console.log('⏳ Waiting 10 seconds for Instagram to process the media...');
+  // eslint-disable-next-line no-promise-executor-return
   await new Promise((resolve) => setTimeout(resolve, 15000)); // wait 15s
 
   console.log('🚀 Publishing video to Instagram...');
+
   const igPostId = await publishInstagramMedia(creationId);
   console.log('✅ Video posted to Instagram:', igPostId);
 

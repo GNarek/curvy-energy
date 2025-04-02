@@ -31,7 +31,10 @@ const videoPoster = async () => {
 
   await imageToReel(imageUrl, quote, videoOutputPath);
 
-  const { caption, hashtags } = await generateCurvyWomanCaption(imagePrompt);
+  const {
+    // caption,
+    hashtags,
+  } = await generateCurvyWomanCaption(imagePrompt);
 
   const message = `${getCallToAction()}\n\n${quote}\n\n${hashtags}`;
 
