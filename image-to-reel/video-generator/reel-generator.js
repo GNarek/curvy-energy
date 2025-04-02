@@ -1,11 +1,11 @@
-const { exec } = require("child_process");
+const { exec } = require('child_process');
 
 const {
   generateNoise,
   generateVignette,
   generateBlurFadeOut,
-} = require("./effects");
-const { generateCaptions } = require("./generate-captions");
+} = require('./effects');
+const { generateCaptions } = require('./generate-captions');
 
 /**
  * Creates a 12s reel with text overlays (with fade-out animation)
@@ -20,7 +20,7 @@ const buildReelVideo = async (
   imagePath,
   text,
   outputPath,
-  audioPath = null
+  audioPath = null,
 ) => {
   const videoDuration = 12; // Duration of video in seconds
   const frameRate = 60;
@@ -31,11 +31,11 @@ const buildReelVideo = async (
 
   // Build main video effect filters
   const effectFilters = [
-    ...generateNoise(30, "0.0,9.0", [0.3, 0.0]),
-    ...generateVignette("0.0,9.0", [0.3, 0.0]),
-    ...generateVignette("9,12.0", [3, 0.0]),
-    ...generateBlurFadeOut("0.0,7.0", 6),
-  ].join(",");
+    ...generateNoise(30, '0.5,9.0', [0.3, 0.0]),
+    ...generateVignette('0.5,9.0', [0.3, 0.0]),
+    ...generateVignette('9,12.0', [3, 0.0]),
+    ...generateBlurFadeOut('0.5,7.0', 6),
+  ].join(',');
 
   // Zoom & Shake settings (same as before)
   const zoomDuration = 3;
@@ -50,22 +50,22 @@ const buildReelVideo = async (
 
   // Process the base image: apply fps, zoompan, effects, etc.
   const mainFilter = `[0:v]fps=${frameRate},zoompan=${zoomExpr}:${shakeX}:${shakeY}:s=1080x1920:d=${totalFrames}:fps=${frameRate}${
-    effectFilters ? `,${effectFilters}` : ""
+    effectFilters ? `,${effectFilters}` : ''
   }[base]`;
 
   // Define filter chains
-  let filterChains = [];
+  const filterChains = [];
   const fadeInDur = 0.5;
   const fadeOutDur = 0.5;
-  const overlayX = "(W-w)/2";
-  const overlayY = "(H-h)*0.75";
+  const overlayX = '(W-w)/2';
+  const overlayY = '(H-h)*0.75';
 
   const captionDuration = Math.floor(videoDuration / linePaths.length);
 
   // Prepare each caption as a separate input
   const inputs = linePaths
     .map((path, i) => `-loop 1 -t ${videoDuration} -i ${path}`)
-    .join(" ");
+    .join(' ');
 
   // First, filter for the base video
   filterChains.push(mainFilter);
@@ -81,11 +81,11 @@ const buildReelVideo = async (
       ? videoDuration - startTime // last caption: stay until end
       : captionDuration;
     const fadeOut = isLast
-      ? "" // don't fade last
+      ? '' // don't fade last
       : `,fade=t=out:st=${displayDuration - fadeOutDur}:d=${fadeOutDur}`;
 
     filterChains.push(
-      `[${inputIndex}:v]format=rgba,fade=t=in:st=0:d=${fadeInDur}${fadeOut},setpts=PTS-STARTPTS+${startTime}/TB[caption${i}]`
+      `[${inputIndex}:v]format=rgba,fade=t=in:st=0:d=${fadeInDur}${fadeOut},setpts=PTS-STARTPTS+${startTime}/TB[caption${i}]`,
     );
 
     // Overlay caption onto video at the right time
@@ -93,7 +93,7 @@ const buildReelVideo = async (
       filterChains.push(
         `[base][caption${i}]overlay=${overlayX}:${overlayY}:enable='between(t,${startTime},${
           startTime + displayDuration
-        })'[out${i}]`
+        })'[out${i}]`,
       );
     } else {
       filterChains.push(
@@ -101,7 +101,7 @@ const buildReelVideo = async (
           i - 1
         }][caption${i}]overlay=${overlayX}:${overlayY}:enable='between(t,${startTime},${
           startTime + displayDuration
-        })'[out${i}]`
+        })'[out${i}]`,
       );
     }
   }
@@ -110,7 +110,7 @@ const buildReelVideo = async (
   filterChains.push(`[out${linePaths.length - 1}]copy[v]`);
 
   // Combine all filter chains with semicolons
-  const filters = filterChains.join(";");
+  const filters = filterChains.join(';');
 
   // Build the full FFmpeg command
   let command = `ffmpeg -y -loop 1 -t ${videoDuration} -i ${imagePath} ${inputs}`;
@@ -131,12 +131,12 @@ const buildReelVideo = async (
   // Add final output options
   command += ` -t ${videoDuration} -r ${frameRate} -pix_fmt yuv420p ${outputPath}`;
 
-  console.log("Running FFmpeg command...");
+  console.log('Running FFmpeg command...');
 
   return new Promise((resolve, reject) => {
     exec(command, (err, stdout, stderr) => {
       if (err) {
-        console.error("❌ FFmpeg error:", stderr);
+        console.error('❌ FFmpeg error:', stderr);
         return reject(err);
       }
       resolve(outputPath);
