@@ -20,10 +20,10 @@ const generateDallePrompt = () => {
 
   const poses = [
     'walking confidently and adjusting her top while biting her lip',
-    'stretching her arms with a seductive smile',
-    'sipping a drink and lifting her shirt slightly',
+    'sitting somewhere, stretching her arms with a seductive smile',
+    'sitting somewhere, sipping a drink and lifting her shirt slightly',
     'tying her hair while smirking at the camera',
-    'checking her phone, legs open slightly, with confidence',
+    'checking her phone,  sitting somewhere legs open slightly, with confidence',
     'pulling her shirt down suggestively mid-walk',
     'brushing hair from her chest and holding eye contact',
     'biting her lip while leaning on a wall playfully',
@@ -165,13 +165,13 @@ const generateDallePrompt = () => {
     const outfit1 = getOutfit();
     const outfit2 = getOutfit();
     outfit = `${outfit1}. The other is ${outfit2}. Be sure they aren't wearing the same clothes and totally different.`;
-    subject = `a ${nationality1} and a ${nationality2} extra plus-size woman (each approximately 120kg, curvy and clearly overweight)`;
+    subject = `a ${nationality1} and a ${nationality2} extra plus-size woman (each approximately 160kg, curvy and clearly overweight)`;
   } else {
     outfit = getOutfit();
-    subject = `a confident, beautiful ${nationality1} extra plus-size woman (approximately 120kg, curvy and clearly overweight)`;
+    subject = `a confident, beautiful ${nationality1} extra plus-size woman (approximately 160kg, curvy and clearly overweight)`;
   }
 
-  const prompt = `Ultra-realistic cinematic photo of ${subject} ${mainAction} ${location}, ${outfit}. Lighting is ${light}. Mood is ${mood}. Focus on glowing skin, bold curves, sensual body language, eye contact, and strong confident posture. Full body visible. Clothing must be casual and outdoors — no nudity, no lingerie, no beds. Woman must be clearly extra plus-size (approximately 120kg), seductive but clothed, sexy not NSFW. Important instruction to AI: the woman must be super extra plus-size fat`;
+  const prompt = `Ultra-realistic cinematic photo of ${subject}. Extra big size ass. ${mainAction} ${location}, ${outfit}. Lighting is ${light}. Mood is ${mood}. Focus on glowing skin, bold curves, sensual body language, eye contact, and strong confident posture. Full body visible. Clothing must be casual and outdoors — no nudity, no lingerie, no beds. Woman must be clearly extra plus-size (approximately 120kg), seductive but clothed, sexy not NSFW. Important instruction to AI: the woman must be super extra plus-size fat`;
 
   return prompt;
 };

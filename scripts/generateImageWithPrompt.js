@@ -21,11 +21,12 @@ const generateImageWithPrompt = async (prompt, retryCount = 0) => {
     const response = await axios.post(
       'https://api.goenhance.ai/api/v1/text2image/generate',
       {
+        // 1743628150594
         args: {
-          seed: 1743628150594,
+          seed: 1743693927194,
           prompt: retryCount > 0 ? generateDallePrompt() : prompt,
           negative_prompt:
-            '5 fingers, worst quality, low quality, lowres, normal quality, bad anatomy, bad hands, deformed fingers, extra fingers, fused fingers, long fingers, blurry fingers, twisted hands, distorted limbs, text, watermark, error, nsfw, nude, topless, naked, see-through, sheer, mesh clothing, thong, bikini, underwear, exposed nipples, nipple covers, erotic, lingerie, bed, pose with no top, open shirt with no bra, fully exposed chest, open robe, straddling, sex toy, censored, mosaic, extreme cleavage, pornographic',
+            'worst quality, low quality, lowres, small ass, medium size ass, not extra huge ass, normal quality, bad anatomy, bad hands, bad fingers, deformed fingers, extra fingers, fused fingers, long fingers, blurry fingers, twisted hands, distorted limbs, text, watermark, error, nsfw, nude, topless, naked, see-through, sheer, mesh clothing, thong, exposed nipples, nipple covers, erotic, lingerie, bed, pose with no top, open shirt with no bra, fully exposed chest, open robe, straddling, sex toy, censored, mosaic, extreme cleavage, pornographic',
           ratio: '9:16',
           model: 12, // 3 // 12
           batch_size: 1,

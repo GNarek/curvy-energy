@@ -1,8 +1,7 @@
 .env
 dev.notes
 seeds.js
-assets/temp/prepared-image.jpg
-assets/temp/reel-image.jpg
+assets/temp/**
 image-to-reel/video-generator/caption-line1.png
 image-to-reel/video-generator/caption-line2.png
 image-to-reel/video-generator/caption-line3.png
