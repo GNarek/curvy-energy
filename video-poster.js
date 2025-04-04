@@ -12,6 +12,7 @@ const { generateDallePrompt } = require('./prompts/image-prompt');
 const { imageToReel } = require('./image-to-reel/image-to-reel');
 const { videoPosterFacebook } = require('./video-poster-facebook');
 const { videoPosterInstagram } = require('./video-poster-instagram');
+const { videoPosterTikTok } = require('./video-poster-tiktok');
 
 // 🟩 Post a video using a random quote as caption
 const videoPoster = async () => {
@@ -33,10 +34,35 @@ const videoPoster = async () => {
 
   const { caption, hashtags } = await generateCurvyWomanCaption(imagePrompt);
 
-  const message = `${getCallToAction()}\n\n${caption}\n\n#CurvyEnergy${hashtags}`;
+  const messageFB = `👉 Get it here: https://curvyenergy.gumroad.com/
+💋 Just dropped: Curvy Babes Vol. 1
+20 thick, high-res babes waiting for you 😈
 
-  await videoPosterFacebook(message, quote);
-  await videoPosterInstagram(message, quote);
+\n\n#CurvyEnergy ${hashtags}`;
+  const messageIn = `💋 Just dropped: Curvy Babes Vol. 1
+20 thick, high-res AI babes waiting for you 😈
+
+🔞 Instant download. No watermarks.
+📩 Link in the comments 👇\n\n#CurvyEnergy ${hashtags}`;
+  // const message = `${getCallToAction()}\n\n${caption}\n\n#CurvyEnergy${hashtags}`;
+
+  await videoPosterFacebook(
+    messageFB,
+    `💋 Just dropped: Curvy Babes Vol. 1
+    20 thick, high-res babes waiting for you 😈
+    👉 Get it here: https://curvyenergy.gumroad.com/ \n\n\n\n${quote}`,
+  );
+
+  await videoPosterInstagram(
+    messageIn,
+    `💋 Just dropped: Curvy Babes Vol. 1
+20 thick, high-res babes waiting for you 😈
+👉 Get it here: https://curvyenergy.gumroad.com/ \n\n\n\n${quote}`,
+  );
+
+  // So the same for tiktok :)
+  // This what I'm working now
+  // await videoPosterTikTok(message);
 };
 
 module.exports = {

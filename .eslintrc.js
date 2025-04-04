@@ -5,6 +5,7 @@ module.exports = {
   ],
   plugins: ['prettier'],
   rules: {
+    camelcase: 'off',
     'prettier/prettier': 'error',
     'no-console': 'off',
     // your other overrides
