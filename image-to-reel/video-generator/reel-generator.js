@@ -33,7 +33,6 @@ const buildReelVideo = async (
   const effectFilters = [
     ...generateNoise(30, '0.5,9.0', [0.3, 0.0]),
     ...generateVignette('0.5,9.0', [0.3, 0.0]),
-    ...generateVignette('9,12.0', [3, 0.0]),
     ...generateBlurFadeOut('0.5,7.0', 6),
   ].join(',');
 
