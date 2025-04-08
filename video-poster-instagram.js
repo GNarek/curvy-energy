@@ -73,8 +73,7 @@ const createInstagramVideoContainer = async (videoUrl, caption) => {
   const endpoint = `https://graph.facebook.com/v19.0/${IG_USER_ID}/media`;
   const params = {
     video_url: videoUrl,
-    caption: `💋 Just dropped: Curvy Babes Vol. 1
-20 thick, high-res AI babes waiting for you 😈
+    caption: `💋 AI generated fantasy for you
 
 🔞 Instant download. No watermarks.
 📩 Link in the comments 👇`,
@@ -165,9 +164,10 @@ const postCommentToInstagram = async (igMediaId, text) => {
   // eslint-disable-next-line no-constant-condition
   const endpoint = `https://graph.facebook.com/v19.0/${igMediaId}/comments`;
   const params = {
-    message: `💋 Just dropped: Curvy Babes Vol. 1
-20 thick, high-res AI babes waiting for you 👇
-https://curvyenergy.gumroad.com/
+    message: `💋 AI generated fantasy for you
+👉 Get it here: https://curvyenergy.gumroad.com/
+
+${text}
 `,
     access_token: IG_ACCESS_TOKEN,
   };

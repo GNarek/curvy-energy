@@ -39,8 +39,7 @@ const videoPoster = async () => {
 20 thick, high-res babes waiting for you 😈
 
 \n\n#CurvyEnergy ${hashtags}`;
-  const messageIn = `💋 Just dropped: Curvy Babes Vol. 1
-20 thick, high-res AI babes waiting for you 😈
+  const messageIn = `💋 AI generated fantasy for you
 
 🔞 Instant download. No watermarks.
 📩 Link in the comments 👇\n\n#CurvyEnergy ${hashtags}`;
@@ -48,16 +47,17 @@ const videoPoster = async () => {
 
   await videoPosterFacebook(
     messageFB,
-    `💋 Just dropped: Curvy Babes Vol. 1
-    20 thick, high-res babes waiting for you 😈
-    👉 Get it here: https://curvyenergy.gumroad.com/ \n\n\n\n${quote}`,
+    `💋 AI generated fantasy for you
+👉 Get it here: https://curvyenergy.gumroad.com/
+
+${caption}
+\n\n\n\n${quote}`,
   );
 
   await videoPosterInstagram(
     messageIn,
-    `💋 Just dropped: Curvy Babes Vol. 1
-20 thick, high-res babes waiting for you 😈
-👉 Get it here: https://curvyenergy.gumroad.com/ \n\n\n\n${quote}`,
+    `💋 AI generated fantasy for you
+👉 Get it here: https://curvyenergy.gumroad.com/ ${caption} \n\n\n\n${quote}`,
   );
 
   // So the same for tiktok :)
