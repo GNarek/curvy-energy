@@ -32,7 +32,9 @@ const videoPoster = async () => {
 
   await imageToReel(imageUrl, quote, videoOutputPath);
 
-  const { caption, hashtags } = await generateCurvyWomanCaption(imagePrompt);
+  // const { caption, hashtags } = await generateCurvyWomanCaption(imagePrompt);
+  const hashtags =
+    '#CurvyEnergy #CurvyAndProud #BodyPositive #PlusSizeBeauty #ConfidenceIsSexy #LoveYourCurves #CurvesAreIn #EffortlessGlam #CurvyVibes #FemininePower';
 
   const messageFB = `👉 Get it here: https://curvyenergy.gumroad.com/
 💋 Just dropped: Curvy Babes Vol. 1
@@ -47,17 +49,12 @@ const videoPoster = async () => {
 
   await videoPosterFacebook(
     messageFB,
-    `💋 AI generated fantasy for you
-👉 Get it here: https://curvyenergy.gumroad.com/
-
-${caption}
-\n\n\n\n${quote}`,
+    `💋 AI generated fantasy for you\nGet it here: https://curvyenergy.gumroad.com/\n\n\n\n${quote}`,
   );
 
   await videoPosterInstagram(
     messageIn,
-    `💋 AI generated fantasy for you
-👉 Get it here: https://curvyenergy.gumroad.com/ ${caption} \n\n\n\n${quote}`,
+    `💋 AI generated fantasy for you\nGet it here: https://curvyenergy.gumroad.com/\n\n\n\n${quote}`,
   );
 
   // So the same for tiktok :)

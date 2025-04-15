@@ -24,10 +24,12 @@ const imagePoster = async () => {
     return;
   }
 
-  const { caption, hashtags } = await generateCurvyWomanCaption(dallePrompt);
+  // const { caption, hashtags } = await generateCurvyWomanCaption(dallePrompt);
+  const hashtags =
+    '#CurvyEnergy #CurvyAndProud #BodyPositive #PlusSizeBeauty #ConfidenceIsSexy #LoveYourCurves #CurvesAreIn #EffortlessGlam #CurvyVibes #FemininePower';
 
-  const message = `${getCallToAction()}\n\n${caption}\n\n#CurvyEnergy, ${hashtags}`;
   const quote = getRandomQuote();
+  const message = `${getCallToAction()}\n\n${quote}\n\n#CurvyEnergy, ${hashtags}`;
 
   console.log('✅ Posting image to Facebook...');
   const postId = await imagePosterFacebook(imageUrl, message);
