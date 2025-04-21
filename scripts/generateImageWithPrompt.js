@@ -16,15 +16,15 @@ const generateImageWithPrompt = async (prompt, retryCount = 0) => {
 
   // Step 1: Request image generation
   const generateImage = async () => {
-    const seed = new Date().getTime();
-    console.log('Seed:', seed);
+    // const seed = new Date().getTime();
+    // console.log('Seed:', seed);
     const response = await axios.post(
       'https://api.goenhance.ai/api/v1/text2image/generate',
       {
         // 1743628150594
         // 1743823772793
         args: {
-          seed,
+          seed: 1745183759692,
           prompt: retryCount > 0 ? generateDallePrompt() : prompt,
           negative_prompt:
             'worst quality, low quality, lowres, small ass, medium size ass, not extra huge ass, normal quality, bad anatomy, bad hands, bad fingers, deformed fingers, extra fingers, fused fingers, long fingers, blurry fingers, twisted hands, distorted limbs, text, watermark, error, nsfw, nude, topless, naked, see-through, sheer, mesh clothing, thong, exposed nipples, nipple covers, erotic, lingerie, bed, pose with no top, open shirt with no bra, fully exposed chest, open robe, straddling, sex toy, censored, mosaic, extreme cleavage, pornographic',
