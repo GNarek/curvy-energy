@@ -134,7 +134,7 @@ const generateDallePrompt = () => {
     'early morning light on full body',
   ];
 
-  const isGroup = Math.random() > 0.3;
+  const isGroup = Math.random() < 0.2;
 
   const mainAction = isGroup ? random(groupPoses) : random(poses);
   const location = random(locations);
